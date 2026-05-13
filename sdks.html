@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDKs - Nexus API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #6366F1; --bg-light: #F8FAFC; --bg-dark: #0F172A; --text-dark: #1E293B; --text-light: #64748B; --border: #E2E8F0; }
+        body { font-family: 'Inter', sans-serif; color: var(--text-dark); line-height: 1.6; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; }
+        .nav-links { display: flex; gap: 32px; margin-left: 48px; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-buttons { margin-left: auto; display: flex; gap: 12px; }
+        .btn { padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; font-size: 14px; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); }
+        .btn-primary { background: var(--primary); color: white; }
+        .main-content { margin-left: 0; padding: 96px 48px 48px; max-width: 900px; margin: 0 auto; }
+        .breadcrumb { display: flex; gap: 8px; margin-bottom: 16px; font-size: 14px; color: var(--text-light); }
+        .breadcrumb a { color: var(--text-light); text-decoration: none; }
+        h1 { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+        .subtitle { font-size: 18px; color: var(--text-light); margin-bottom: 32px; }
+        .sdk-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 48px; }
+        .sdk-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.2s; }
+        .sdk-card:hover { border-color: var(--primary); box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1); }
+        .sdk-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .sdk-icon { font-size: 32px; }
+        .sdk-name { font-size: 24px; font-weight: 600; }
+        .sdk-version { font-size: 14px; color: var(--text-light); }
+        .sdk-install { background: var(--bg-light); padding: 12px 16px; border-radius: 8px; font-family: monospace; font-size: 14px; margin-bottom: 16px; }
+        .sdk-links { display: flex; gap: 16px; }
+        .sdk-links a { color: var(--primary); text-decoration: none; font-size: 14px; }
+        .sdk-links a:hover { text-decoration: underline; }
+        h2 { font-size: 24px; font-weight: 600; margin: 48px 0 16px; padding-top: 32px; border-top: 1px solid var(--border); }
+        .code-block { background: var(--bg-dark); color: #E2E8F0; padding: 20px; border-radius: 12px; font-family: 'Monaco', monospace; font-size: 14px; overflow-x: auto; margin-bottom: 24px; }
+        .code-block .keyword { color: #C792EA; }
+        .code-block .string { color: #C3E88D; }
+        .code-block .comment { color: #697098; }
+        .code-block .function { color: #82AAFF; }
+        .tab-buttons { display: flex; gap: 8px; margin-bottom: 16px; }
+        .tab-btn { padding: 8px 16px; border: 1px solid var(--border); background: white; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-light); font-size: 14px; text-align: center; }
+        @media (max-width: 768px) { .sdk-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><div class="logo-icon">N</div><span>Nexus<span style="color: var(--primary);">API</span></span></div>
+        <div class="nav-links">
+            <a href="index.html">Getting Started</a>
+            <a href="index.html#api-reference">API Reference</a>
+            <a href="sdks.html" class="active">SDKs</a>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn btn-outline">GitHub</button>
+            <button class="btn btn-primary">Get API Key</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="index.html">Docs</a> / <span>SDKs</span>
+        </div>
+
+        <h1>Official SDKs</h1>
+        <p class="subtitle">Use our official SDKs to integrate Nexus API into your application</p>
+
+        <div class="sdk-grid">
+            <div class="sdk-card">
+                <div class="sdk-header">
+                    <span class="sdk-icon">🟨</span>
+                    <div>
+                        <div class="sdk-name">TypeScript / JavaScript</div>
+                        <div class="sdk-version">v2.4.0 • MIT License</div>
+                    </div>
+                </div>
+                <div class="sdk-install">npm install @nexusapi/sdk</div>
+                <div class="sdk-links">
+                    <a href="#">Documentation</a>
+                    <a href="#">npm</a>
+                    <a href="#">GitHub</a>
+                </div>
+            </div>
+
+            <div class="sdk-card">
+                <div class="sdk-header">
+                    <span class="sdk-icon">🐍</span>
+                    <div>
+                        <div class="sdk-name">Python</div>
+                        <div class="sdk-version">v2.3.1 • MIT License</div>
+                    </div>
+                </div>
+                <div class="sdk-install">pip install nexusapi</div>
+                <div class="sdk-links">
+                    <a href="#">Documentation</a>
+                    <a href="#">PyPI</a>
+                    <a href="#">GitHub</a>
+                </div>
+            </div>
+
+            <div class="sdk-card">
+                <div class="sdk-header">
+                    <span class="sdk-icon">🐹</span>
+                    <div>
+                        <div class="sdk-name">Go</div>
+                        <div class="sdk-version">v1.2.0 • MIT License</div>
+                    </div>
+                </div>
+                <div class="sdk-install">go get github.com/nexusapi/nexus-go</div>
+                <div class="sdk-links">
+                    <a href="#">Documentation</a>
+                    <a href="#">pkg.go.dev</a>
+                    <a href="#">GitHub</a>
+                </div>
+            </div>
+
+            <div class="sdk-card">
+                <div class="sdk-header">
+                    <span class="sdk-icon">🔷</span>
+                    <div>
+                        <div class="sdk-name">Ruby</div>
+                        <div class="sdk-version">v1.1.5 • MIT License</div>
+                    </div>
+                </div>
+                <div class="sdk-install">gem install nexus_api</div>
+                <div class="sdk-links">
+                    <a href="#">Documentation</a>
+                    <a href="#">RubyGems</a>
+                    <a href="#">GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <h2>Quick Start Examples</h2>
+
+        <div class="code-block">
+<span class="comment">// TypeScript / JavaScript</span>
+<span class="keyword">import</span> { NexusClient } <span class="keyword">from</span> <span class="string">'@nexusapi/sdk'</span>;
+
+<span class="keyword">const</span> nexus = <span class="keyword">new</span> <span class="function">NexusClient</span>({
+  apiKey: process.env.NEXUS_API_KEY
+});
+
+<span class="comment">// Get current user</span>
+<span class="keyword">const</span> user = <span class="keyword">await</span> nexus.users.<span class="function">me</span>();
+
+<span class="comment">// Create a project</span>
+<span class="keyword">const</span> project = <span class="keyword">await</span> nexus.projects.<span class="function">create</span>({
+  name: <span class="string">'My New Project'</span>,
+  description: <span class="string">'A sample project'</span>
+});
+        </div>
+
+        <div class="code-block">
+<span class="comment"># Python</span>
+<span class="keyword">from</span> nexusapi <span class="keyword">import</span> NexusClient
+<span class="keyword">import</span> os
+
+client = NexusClient(api_key=os.environ.get(<span class="string">'NEXUS_API_KEY'</span>))
+
+<span class="comment"># Get current user</span>
+user = client.users.me()
+
+<span class="comment"># Create a project</span>
+project = client.projects.create(
+    name=<span class="string">'My New Project'</span>,
+    description=<span class="string">'A sample project'</span>
+)
+        </div>
+
+        <div class="code-block">
+<span class="comment">// Go</span>
+<span class="keyword">package</span> main
+
+<span class="keyword">import</span> (
+    <span class="string">"fmt"</span>
+    <span class="string">"os"</span>
+    nexusapi <span class="string">"github.com/nexusapi/nexus-go"</span>
+)
+
+<span class="keyword">func</span> <span class="function">main</span>() {
+    client := nexusapi.<span class="function">NewClient</span>(os.Getenv(<span class="string">"NEXUS_API_KEY"</span>))
+
+    user, _ := client.Users.Me()
+    fmt.Println(user.Name)
+
+    project, _ := client.Projects.Create(&nexusapi.ProjectInput{
+        Name: <span class="string">"My New Project"</span>,
+    })
+    fmt.Println(project.ID)
+}
+        </div>
+
+        <h2>Need Another Language?</h2>
+        <p>Don't see your language? You can use our REST API directly, or check community-built SDKs.</p>
+        <p>Community SDKs are maintained by the open-source community and may not have full feature parity.</p>
+
+        <div class="footer">
+            <p>© 2024 Nexus API | <a href="https://github.com/bhedanikhilkumar-code">GitHub</a> | <a href="mailto:support@nexusapi.dev">Support</a></p>
+        </div>
+    </main>
+</body>
+</html>
