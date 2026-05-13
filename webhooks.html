@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhooks - Nexus API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #6366F1; --bg-light: #F8FAFC; --bg-dark: #0F172A; --text-dark: #1E293B; --text-light: #64748B; --border: #E2E8F0; --success: #10B981; --warning: #F59E0B; }
+        body { font-family: 'Inter', sans-serif; color: var(--text-dark); line-height: 1.6; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; }
+        .nav-links { display: flex; gap: 32px; margin-left: 48px; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-buttons { margin-left: auto; display: flex; gap: 12px; }
+        .btn { padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; font-size: 14px; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); }
+        .btn-primary { background: var(--primary); color: white; }
+        .sidebar { position: fixed; top: 64px; left: 0; width: 280px; height: calc(100vh - 64px); background: white; border-right: 1px solid var(--border); padding: 24px; overflow-y: auto; }
+        .sidebar-section { margin-bottom: 24px; }
+        .sidebar-title { font-size: 12px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+        .sidebar-links { list-style: none; }
+        .sidebar-links li { margin-bottom: 8px; }
+        .sidebar-links a { color: var(--text-light); text-decoration: none; font-size: 14px; display: block; padding: 6px 12px; border-radius: 6px; }
+        .sidebar-links a:hover { background: var(--bg-light); color: var(--text-dark); }
+        .sidebar-links a.active { background: rgba(99, 102, 241, 0.1); color: var(--primary); font-weight: 500; }
+        .main-content { margin-left: 280px; padding: 96px 48px 48px; max-width: 900px; }
+        .breadcrumb { display: flex; gap: 8px; margin-bottom: 16px; font-size: 14px; color: var(--text-light); }
+        .breadcrumb a { color: var(--text-light); text-decoration: none; }
+        h1 { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+        .subtitle { font-size: 18px; color: var(--text-light); margin-bottom: 32px; }
+        h2 { font-size: 24px; font-weight: 600; margin: 48px 0 16px; padding-top: 32px; border-top: 1px solid var(--border); }
+        .endpoint { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .endpoint-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .method { padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+        .method-get { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .method-post { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+        .method-delete { background: rgba(239, 68, 68, 0.1); color: #EF4444; }
+        .endpoint-path { font-family: monospace; font-size: 16px; font-weight: 500; }
+        .endpoint-desc { color: var(--text-light); font-size: 14px; }
+        .code-block { background: var(--bg-dark); color: #E2E8F0; padding: 20px; border-radius: 12px; font-family: 'Monaco', monospace; font-size: 14px; overflow-x: auto; margin-bottom: 24px; }
+        .code-block .keyword { color: #C792EA; }
+        .code-block .string { color: #C3E88D; }
+        .code-block .comment { color: #697098; }
+        .event-list { background: var(--bg-light); padding: 20px; border-radius: 12px; margin-bottom: 24px; }
+        .event-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+        .event-item:last-child { border-bottom: none; }
+        .event-name { font-weight: 500; min-width: 200px; font-family: monospace; }
+        .event-desc { color: var(--text-light); }
+        .tip { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 16px 20px; border-radius: 8px; margin-bottom: 24px; }
+        .footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-light); font-size: 14px; }
+        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; padding: 80px 24px 24px; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><div class="logo-icon">N</div><span>Nexus<span style="color: var(--primary);">API</span></span></div>
+        <div class="nav-links">
+            <a href="index.html">Getting Started</a>
+            <a href="index.html#api-reference" class="active">API Reference</a>
+            <a href="#">SDKs</a>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn btn-outline">GitHub</button>
+            <button class="btn btn-primary">Get API Key</button>
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Getting Started</div>
+            <ul class="sidebar-links">
+                <li><a href="index.html">Introduction</a></li>
+                <li><a href="authentication.html">Authentication</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">API Reference</div>
+            <ul class="sidebar-links">
+                <li><a href="users.html">Users</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="files.html">Files</a></li>
+                <li><a href="webhooks.html" class="active">Webhooks</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="index.html">Docs</a> / <a href="index.html#api-reference">API Reference</a> / <span>Webhooks</span>
+        </div>
+
+        <h1>Webhooks</h1>
+        <p class="subtitle">Subscribe to real-time events and receive notifications when data changes</p>
+
+        <h2>How Webhooks Work</h2>
+        <p>Webhooks allow you to receive HTTP POST requests to your server when specific events occur in your Nexus API account.</p>
+
+        <div class="code-block">
+<span class="comment"># Your webhook endpoint will receive:</span>
+{
+  <span class="string">"event"</span>: <span class="string">"user.created"</span>,
+  <span class="string">"timestamp"</span>: <span class="string">"2024-01-01T00:00:00Z"</span>,
+  <span class="string">"data"</span>: {
+    <span class="string">"id"</span>: <span class="string">"usr_abc123"</span>,
+    <span class="string">"email"</span>: <span class="string">"new@user.com"</span>
+  }
+}
+        </div>
+
+        <h2>Available Events</h2>
+        <div class="event-list">
+            <div class="event-item">
+                <span class="event-name">user.created</span>
+                <span class="event-desc">A new user was created</span>
+            </div>
+            <div class="event-item">
+                <span class="event-name">user.updated</span>
+                <span class="event-desc">A user was updated</span>
+            </div>
+            <div class="event-item">
+                <span class="event-name">user.deleted</span>
+                <span class="event-desc">A user was deleted</span>
+            </div>
+            <div class="event-item">
+                <span class="event-name">project.created</span>
+                <span class="event-desc">A new project was created</span>
+            </div>
+            <div class="event-item">
+                <span class="event-name">project.updated</span>
+                <span class="event-desc">A project was updated</span>
+            </div>
+            <div class="event-item">
+                <span class="event-name">file.uploaded</span>
+                <span class="event-desc">A file was uploaded</span>
+            </div>
+            <div class="event-item">
+                <span class="event-name">file.deleted</span>
+                <span class="event-desc">A file was deleted</span>
+            </div>
+        </div>
+
+        <h2>Endpoints</h2>
+        <div class="endpoint">
+            <div class="endpoint-header">
+                <span class="method method-get">GET</span>
+                <span class="endpoint-path">/webhooks</span>
+            </div>
+            <p class="endpoint-desc">List all webhooks</p>
+        </div>
+        <div class="endpoint">
+            <div class="endpoint-header">
+                <span class="method method-post">POST</span>
+                <span class="endpoint-path">/webhooks</span>
+            </div>
+            <p class="endpoint-desc">Create a new webhook</p>
+        </div>
+        <div class="endpoint">
+            <div class="endpoint-header">
+                <span class="method method-delete">DELETE</span>
+                <span class="endpoint-path">/webhooks/:id</span>
+            </div>
+            <p class="endpoint-desc">Delete a webhook</p>
+        </div>
+
+        <h2>Create Webhook</h2>
+        <div class="code-block">
+curl -X POST https://api.nexusapi.dev/v1/webhooks \
+  -H <span class="string">"Authorization: Bearer YOUR_API_KEY"</span> \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -d <span class="string">'{
+    "url": "https://your-server.com/webhook",
+    "events": ["user.created", "project.updated"],
+    "secret": "whsec_your_secret_key"
+  }'</span>
+        </div>
+
+        <div class="tip">
+            <strong>💡 Tip:</strong> Always verify webhook signatures using the secret key to ensure requests are from Nexus API.
+        </div>
+
+        <h2>Verify Signatures</h2>
+        <div class="code-block">
+<span class="comment"># Each webhook request includes a signature header</span>
+<span class="string">X-Nexus-Signature</span>: sha256=abc123...
+
+<span class="comment"># Verify in your server:</span>
+<span class="keyword">const</span> crypto = require(<span class="string">'crypto'</span>);
+<span class="keyword">const</span> expectedSig = crypto
+  .createHmac(<span class="string">'sha256'</span>, secret)
+  .update(body)
+  .digest(<span class="string">'hex'</span>);
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Nexus API | <a href="https://github.com/bhedanikhilkumar-code">GitHub</a> | <a href="mailto:support@nexusapi.dev">Support</a></p>
+        </div>
+    </main>
+</body>
+</html>
