@@ -1,0 +1,116 @@
+---
+title: Content Visibility
+description: Show different content to humans and AI agents
+---
+
+Control what humans and AI agents see in your documentation using visibility components.
+
+## Why Control Visibility?
+
+- **For humans**: Simplified explanations, visual guides
+- **For AI agents**: Structured data, code examples, technical details
+- **Both**: Core documentation content
+
+## Visibility Options
+
+### Show to Everyone
+
+```mdx
+<Universal>
+  This content is visible to both humans and AI agents.
+</Universal>
+```
+
+### Human-Only Content
+
+```mdx
+<Human>
+  This detailed explanation is only visible to human readers.
+  Perfect for tutorials and visual guides.
+</Human>
+```
+
+### AI-Only Content
+
+```mdx
+<Agent>
+  This structured data is optimized for AI understanding.
+  Include JSON schemas, exact parameter names, and technical specs.
+</Agent>
+```
+
+## Complete Example
+
+```mdx
+---
+title: Create User
+description: Create a new user via API
+---
+
+## Overview
+
+<Universal>
+  Create a new user in your account with email and name.
+</Universal>
+
+## Endpoint
+
+```
+POST /v1/users
+```
+
+## Parameters
+
+<Universal>
+  | Name | Type | Description |
+  |------|------|-------------|
+  | email | string | User's email |
+  | name | string | Display name |
+</Universal>
+
+<Agent>
+  Schema:
+  ```json
+  {
+    "email": "string (required, valid email)",
+    "name": "string (required, 1-100 chars)",
+    "metadata": "object (optional)"
+  }
+  ```
+</Agent>
+
+## Examples
+
+<Human>
+  Watch this video tutorial on creating users:
+  VIDEO: /videos/create-user.mp4
+</Human>
+
+## Code
+
+<Universal>
+  ```python
+  user = client.users.create(
+      email="new@example.com",
+      name="New User"
+  )
+  ```
+</Universal>
+```
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Keep Universal minimal" icon="file">
+    Only essential content should be universal.
+  </Card>
+  <Card title="Use Agent for APIs" icon="code">
+    Include exact schemas and parameters for AI parsing.
+  </Card>
+  <Card title="Use Human for guides" icon="book">
+    Detailed tutorials and videos for human readers.
+  </Card>
+  <Card title="Test visibility" icon="eye">
+    Preview how content looks for each audience.
+  </Card>
+</CardGroup>

@@ -1,0 +1,149 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "indigo",
+  "name": "Nexus API",
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#6366F1",
+    "light": "#818CF8",
+    "dark": "#4F46E5",
+    "accent": "#8B5CF6",
+    "background": {
+      "dark": "#0F0F1A"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "quickstart",
+              "development"
+            ]
+          },
+          {
+            "group": "Authentication",
+            "pages": [
+              "essentials/auth",
+              "essentials/api-keys"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "essentials/models",
+              "essentials/endpoints",
+              "essentials/rate-limits"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "essentials/pagination",
+              "essentials/errors",
+              "essentials/webhooks"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Users",
+            "pages": [
+              "api-reference/users/list",
+              "api-reference/users/create",
+              "api-reference/users/update",
+              "api-reference/users/delete"
+            ]
+          },
+          {
+            "group": "Projects",
+            "pages": [
+              "api-reference/projects/list",
+              "api-reference/projects/create",
+              "api-reference/projects/update",
+              "api-reference/projects/delete"
+            ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "api-reference/analytics/overview",
+              "api-reference/analytics/events",
+              "api-reference/analytics/metrics"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "SDKs & Examples",
+        "groups": [
+          {
+            "group": "SDKs",
+            "pages": [
+              "snippets/python",
+              "snippets/javascript",
+              "snippets/curl"
+            ]
+          },
+          {
+            "group": "AI Agent Integration",
+            "pages": [
+              "agent-ready/prompt",
+              "agent-ready/visibility",
+              "agent-ready/contextual"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "API Changelog",
+          "href": "https://github.com/bhedanikhilkumar-code/docs/blob/main/CHANGELOG.md",
+          "icon": "file-code"
+        },
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/bhedanikhilkumar-code/docs",
+          "icon": "github"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Status",
+        "href": "https://status.nexus.dev"
+      },
+      {
+        "label": "Community",
+        "href": "https://discord.gg/nexus"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get API Key",
+      "href": "/essentials/api-keys"
+    }
+  },
+  "footer": {
+    "message": "© 2024 Nexus API. Built for developers who demand more.",
+    "socials": {
+      "github": "https://github.com/bhedanikhilkumar-code",
+      "twitter": "https://x.com/nexusapi"
+    }
+  }
+}

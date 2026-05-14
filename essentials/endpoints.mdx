@@ -1,0 +1,34 @@
+---
+title: Endpoints
+description: Understanding Nexus API endpoint structure
+---
+
+## Base URL
+
+```
+https://api.nexus.dev/v1
+```
+
+Sandbox: `https://api-sandbox.nexus.dev/v1`
+
+## HTTP Methods
+
+| Method | Action | Example |
+|--------|--------|---------|
+| `GET` | Retrieve | `GET /v1/users` |
+| `POST` | Create | `POST /v1/users` |
+| `PATCH` | Update | `PATCH /v1/users/{id}` |
+| `DELETE` | Remove | `DELETE /v1/users/{id}` |
+
+## Common Headers
+
+```bash
+Authorization: Bearer nx_live_xxxxxxxxxxxx
+Content-Type: application/json
+```
+
+## URL Structure
+
+```
+https://api.nexus.dev/v1/{resource}/{id}/{sub-resource}
+```

@@ -1,0 +1,109 @@
+---
+title: Create User
+description: Create a new user in your account
+---
+
+Create a new user with the specified properties.
+
+## Endpoint
+
+```
+POST /v1/users
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `email` | string | Yes | User's email address (must be unique) |
+| `name` | string | Yes | User's display name |
+| `role` | string | No | User role (default: `member`) |
+| `metadata` | object | No | Custom key-value metadata |
+
+## Request Body
+
+```json
+{
+  "email": "newuser@example.com",
+  "name": "New User",
+  "role": "member",
+  "metadata": {
+    "source": "api",
+    "plan": "pro"
+  }
+}
+```
+
+## Request
+
+<Tabs>
+  <Tab value="curl" label="cURL">
+    ```bash
+    curl -X POST "https://api.nexus.dev/v1/users" \
+      -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "email": "newuser@example.com",
+        "name": "New User",
+        "role": "member"
+      }'
+    ```
+  </Tab>
+  <Tab value="python" label="Python">
+    ```python
+    user = client.users.create(
+        email="newuser@example.com",
+        name="New User",
+        role="member"
+    )
+    ```
+  </Tab>
+  <Tab value="node" label="Node.js">
+    ```javascript
+    const user = await client.users.create({
+      email: 'newuser@example.com',
+      name: 'New User',
+      role: 'member'
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Response
+
+```json
+{
+  "id": "usr_3c4d5e6f7g8",
+  "object": "user",
+  "email": "newuser@example.com",
+  "name": "New User",
+  "avatar_url": null,
+  "status": "active",
+  "role": "member",
+  "metadata": {},
+  "created_at": "2024-01-20T15:30:00Z",
+  "updated_at": "2024-01-20T15:30:00Z"
+}
+```
+
+## Error Responses
+
+| Status | Code | Description |
+|--------|------|-------------|
+| 400 | `validation_error` | Invalid email format or missing required fields |
+| 409 | `conflict` | Email already exists |
+
+## Python SDK
+
+```python
+from nexus.exceptions import NexusConflictError
+
+try:
+    user = client.users.create(
+        email="newuser@example.com",
+        name="New User"
+    )
+    print(f"Created user: {user.id}")
+except NexusConflictError:
+    print("User with this email already exists")
+```

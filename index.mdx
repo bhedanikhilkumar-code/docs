@@ -1,0 +1,93 @@
+---
+title: Nexus API Documentation
+description: Build powerful applications with the Nexus API. Real-time data, intelligent routing, and enterprise-grade security.
+---
+
+<Frame type="glass">
+  <div className="py-12 px-8 text-center">
+    <h1 className="text-4xl font-bold mb-4">Welcome to Nexus API</h1>
+    <p className="text-lg opacity-80 mb-8">
+      The modern API for building scalable, intelligent applications
+    </p>
+    <div className="flex gap-4 justify-center">
+      <a href="/quickstart" className="px-6 py-3 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-gray-100 transition">
+        Quick Start →
+      </a>
+      <a href="/api-reference/users/list" className="px-6 py-3 border border-white/30 text-white rounded-lg font-semibold hover:bg-white/10 transition">
+        View API Reference
+      </a>
+    </div>
+  </div>
+</Frame>
+
+## Why Nexus?
+
+<CardGroup cols={3}>
+  <Card title="Lightning Fast" icon="bolt">
+    Sub-50ms response times globally. Edge caching built-in for maximum performance.
+  </Card>
+  <Card title="Developer First" icon="code">
+    Clean REST API, comprehensive SDKs, and detailed documentation to get you started in minutes.
+  </Card>
+  <Card title="Enterprise Ready" icon="shield">
+    SOC 2 Type II certified, GDPR compliant, with 99.99% uptime SLA.
+  </Card>
+</CardGroup>
+
+## Core Features
+
+<CardGroup cols={2}>
+  <Card title="User Management" icon="users" href="/api-reference/users/list">
+    Complete CRUD operations for user management with built-in validation and permissions.
+  </Card>
+  <Card title="Project Organization" icon="folder" href="/api-reference/projects/list">
+    Organize your work into projects with team collaboration features.
+  </Card>
+  <Card title="Real-time Analytics" icon="chart" href="/api-reference/analytics/overview">
+    Track usage, monitor performance, and get insights into your application.
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/essentials/webhooks">
+    Receive real-time notifications when events happen in your account.
+  </Card>
+</CardGroup>
+
+## Quick Links
+
+<Tabs>
+  <Tab value="sdk" label="SDKs">
+    ```python
+    # Python SDK
+    from nexus import Client
+    
+    client = Client(api_key="your_api_key")
+    users = client.users.list(limit=10)
+    ```
+  </Tab>
+  <Tab value="curl" label="cURL">
+    ```bash
+    # Direct API call
+    curl -X GET https://api.nexus.dev/v1/users \
+      -H "Authorization: Bearer YOUR_API_KEY"
+    ```
+  </Tab>
+  <Tab value="js" label="JavaScript">
+    ```javascript
+    // JavaScript/Node.js SDK
+    import { NexusClient } from '@nexus/sdk';
+    
+    const client = new NexusClient({ apiKey: 'your_api_key' });
+    const users = await client.users.list({ limit: 10 });
+    ```
+  </Tab>
+</Tabs>
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card title="Community Discord" icon="message" href="https://discord.gg/nexus">
+    Join thousands of developers on our Discord server.
+  </Card>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/bhedanikhilkumar-code/docs/issues">
+    Report bugs, request features, or contribute.
+  </Card>
+</CardGroup>

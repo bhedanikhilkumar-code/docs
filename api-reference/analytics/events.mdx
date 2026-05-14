@@ -1,0 +1,79 @@
+---
+title: Track Events
+description: Send custom analytics events
+---
+
+Track custom events in your application.
+
+## Endpoint
+
+```
+POST /v1/analytics/events
+```
+
+## Body Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Event name (e.g., `purchase_completed`) |
+| `user_id` | string | No | Associated user ID |
+| `properties` | object | No | Custom event properties |
+
+## Request
+
+```bash
+curl -X POST "https://api.nexus.dev/v1/analytics/events" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "purchase_completed",
+    "user_id": "usr_1a2b3c4d5e",
+    "properties": {
+      "amount": 99.99,
+      "currency": "USD",
+      "items_count": 3
+    }
+  }'
+```
+
+## Python SDK
+
+```python
+# Track a purchase event
+client.analytics.track(
+    name="purchase_completed",
+    user_id="usr_1a2b3c4d5e",
+    properties={
+        "amount": 99.99,
+        "currency": "USD",
+        "items_count": 3,
+        "coupon_used": True
+    }
+)
+
+# Track a page view
+client.analytics.track(
+    name="page_viewed",
+    properties={
+        "url": "/pricing",
+        "referrer": "google.com"
+    }
+)
+```
+
+## Response
+
+```json
+{
+  "id": "evt_7i8j9k0l1m",
+  "object": "event",
+  "name": "purchase_completed",
+  "user_id": "usr_1a2b3c4d5e",
+  "properties": {
+    "amount": 99.99,
+    "currency": "USD",
+    "items_count": 3
+  },
+  "timestamp": "2024-01-20T16:45:00Z"
+}
+```

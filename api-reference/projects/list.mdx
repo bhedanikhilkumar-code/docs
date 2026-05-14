@@ -1,0 +1,73 @@
+---
+title: List Projects
+description: Retrieve all projects in your account
+---
+
+Get a paginated list of all projects.
+
+## Endpoint
+
+```
+GET /v1/projects
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `limit` | integer | No | Number of results (1-100, default: 20) |
+| `cursor` | string | No | Pagination cursor |
+| `status` | string | No | Filter by status: `active`, `archived` |
+| `visibility` | string | No | Filter by visibility: `public`, `private`, `internal` |
+
+## Request
+
+```bash
+curl "https://api.nexus.dev/v1/projects?limit=20" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+## Response
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "prj_1a2b3c4d5e",
+      "object": "project",
+      "name": "Website Redesign",
+      "description": "Company website redesign project",
+      "status": "active",
+      "visibility": "private",
+      "team_id": "team_1a2b3c",
+      "settings": {
+        "default_permissions": "read",
+        "allowed_origins": ["https://example.com"]
+      },
+      "created_at": "2024-01-10T09:00:00Z",
+      "updated_at": "2024-01-20T14:00:00Z"
+    }
+  ],
+  "meta": {
+    "total": 25,
+    "count": 20,
+    "has_more": true,
+    "next_cursor": "cur_eyJpZCI6InByb18yIn0"
+  }
+}
+```
+
+## Python SDK
+
+```python
+# List all projects
+for project in client.projects.list_all():
+    print(f"{project.name} ({project.status})")
+
+# Filter by status
+archived = client.projects.list(status="archived")
+
+# Filter by visibility
+private = client.projects.list(visibility="private")
+```

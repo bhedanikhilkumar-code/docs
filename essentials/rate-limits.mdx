@@ -1,0 +1,43 @@
+---
+title: Rate Limits
+description: Understand and handle Nexus API rate limits
+---
+
+## Rate Limit Tiers
+
+| Plan | Requests/min | Burst |
+|------|--------------|-------|
+| Free | 60 | 100 |
+| Pro | 300 | 500 |
+| Enterprise | 1,000 | 2,000 |
+
+## Rate Limit Headers
+
+```bash
+X-RateLimit-Limit: 300
+X-RateLimit-Remaining: 287
+X-RateLimit-Reset: 1705760400
+```
+
+## Handling 429 Errors
+
+```python
+import time
+from nexus.exceptions import NexusRateLimitError
+
+def retry_with_backoff(func, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return func()
+        except NexusRateLimitError as e:
+            if attempt == max_retries - 1:
+                raise
+            wait_time = e.retry_after or (2 ** attempt)
+            time.sleep(wait_time)
+```
+
+## Best Practices
+
+- Cache frequently accessed data
+- Batch operations when possible
+- Use webhooks instead of polling

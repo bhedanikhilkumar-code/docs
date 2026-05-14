@@ -1,166 +1,128 @@
-<div align="center">
-  <img src="https://img.shields.io/badge/Nexus%20API-v1.0.0-6366F1?style=for-the-badge" alt="Version">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
-  <img src="https://img.shields.io/badge/Docs-GitHub%20Pages-blue?style=for-the-badge" alt="Docs">
-  <br><br>
-  <h1>🚀 Nexus API Documentation</h1>
-  <p>Official documentation for the Nexus API platform — a unified development platform for building, managing, and scaling modern applications.</p>
-  <br>
-  <a href="https://bhedanikhilkumar-code.github.io/docs/"><strong>📖 Live Documentation →</strong></a>
-  <a href="https://github.com/bhedanikhilkumar-code/docs/issues"><strong>🐛 Report Bug →</strong></a>
-  <a href="https://github.com/bhedanikhilkumar-code/docs/discussions"><strong>💬 Discussions →</strong></a>
-</div>
+# Nexus API Documentation
+
+<p align="center">
+  <img src="https://cdn.nexus.dev/logo.svg" width="120" alt="Nexus API">
+</p>
+
+<p align="center">
+  <strong>The modern API for building scalable, intelligent applications</strong>
+</p>
+
+<p align="center">
+  <a href="https://docs.nexus.dev">Documentation</a> •
+  <a href="https://app.nexus.dev">Dashboard</a> •
+  <a href="https://discord.gg/nexus">Discord</a>
+</p>
 
 ---
 
-## 🎯 Overview
-
-Nexus API provides a comprehensive set of RESTful endpoints for managing users, projects, files, and webhooks. This repository contains the official documentation site.
-
-### Key Features
-
-- ⚡ **Fast & Reliable** — Global CDN delivery with 99.9% uptime SLA
-- 🔐 **Secure** — API key authentication with signature verification for webhooks
-- 📊 **Scalable** — Handle millions of requests with our distributed infrastructure
-- 🛠️ **Developer-Friendly** — Official SDKs for TypeScript, Python, Go, and Ruby
-
----
-
-## 🛠️ Quick Start
-
-### 1. Get Your API Key
-
-Sign up at [dashboard.nexusapi.dev](https://dashboard.nexusapi.dev) to get your API key.
-
-### 2. Install the SDK
+## Quick Start
 
 ```bash
-# TypeScript / JavaScript
-npm install @nexusapi/sdk
+# Install the SDK
+pip install nexus-sdk
 
-# Python
-pip install nexusapi
+# Make your first API call
+from nexus import Client
 
-# Go
-go get github.com/nexusapi/nexus-go
+client = Client(api_key="nx_live_xxxxxxxxxxxx")
+user = client.users.me()
+print(f"Logged in as: {user.email}")
 ```
 
-### 3. Make Your First Request
+## Features
 
-```typescript
-import { NexusClient } from '@nexusapi/sdk';
+- 🚀 **Lightning Fast** - Sub-50ms response times globally
+- 🔒 **Enterprise Ready** - SOC 2 Type II certified, GDPR compliant
+- 📚 **Comprehensive** - Full API reference with examples
+- 🤖 **AI Agent Ready** - Optimized for AI coding tools
+- 💻 **Multi-Language SDKs** - Python, Node.js, Go
 
-const nexus = new NexusClient({
-  apiKey: process.env.NEXUS_API_KEY
-});
-
-// Get current user
-const user = await nexus.users.me();
-console.log(`Hello, ${user.name}!`);
-```
-
----
-
-## 📚 Documentation
+## Documentation Structure
 
 | Section | Description |
 |---------|-------------|
-| [Getting Started](https://bhedanikhilkumar-code.github.io/docs/) | Introduction and overview |
-| [Authentication](https://bhedanikhilkumar-code.github.io/docs/authentication.html) | API key setup and security |
-| [Users API](https://bhedanikhilkumar-code.github.io/docs/users.html) | User management endpoints |
-| [Projects API](https://bhedanikhilkumar-code.github.io/docs/projects.html) | Project CRUD operations |
-| [Files API](https://bhedanikhilkumar-code.github.io/docs/files.html) | File upload and CDN delivery |
-| [Webhooks](https://bhedanikhilkumar-code.github.io/docs/webhooks.html) | Real-time event notifications |
-| [SDKs](https://bhedanikhilkumar-code.github.io/docs/sdks.html) | Official client libraries |
+| [Getting Started](/quickstart) | Quick start guide |
+| [Authentication](/essentials/auth) | API key authentication |
+| [API Reference](/api-reference/users/list) | Complete API documentation |
+| [SDKs](/snippets/python) | Multi-language SDK examples |
 
----
+## Installation
 
-## 🔌 API Reference
-
-### Base URL
-
-```
-https://api.nexusapi.dev/v1
-```
-
-### Authentication
-
-All requests require a Bearer token:
+### Python
 
 ```bash
-curl https://api.nexusapi.dev/v1/me \
-  -H "Authorization: Bearer YOUR_API_KEY"
+pip install nexus-sdk
 ```
 
-### Rate Limits
-
-| Plan | Requests/min | Requests/day |
-|------|-------------|--------------|
-| Free | 60 | 1,000 |
-| Pro | 600 | 100,000 |
-| Enterprise | Unlimited | Unlimited |
-
----
-
-## 🧩 Available SDKs
-
-| Language | Package | Version |
-|----------|---------|---------|
-| TypeScript/JavaScript | `@nexusapi/sdk` | ![npm](https://img.shields.io/npm/v/@nexusapi/sdk) |
-| Python | `nexusapi` | ![PyPI](https://img.shields.io/pypi/v/nexusapi) |
-| Go | `github.com/nexusapi/nexus-go` | ![Go](https://pkg.go.dev/badge/github.com/nexusapi/nexus-go) |
-| Ruby | `nexus_api` | ![RubyGems](https://img.shields.io/gem/v/nexus_api) |
-
----
-
-## 🌐 Deployment
-
-This documentation site is automatically deployed to GitHub Pages on every push to the `main` branch.
-
-To deploy manually:
+### Node.js
 
 ```bash
-# Clone the repository
-git clone https://github.com/bhedanikhilkumar-code/docs.git
-cd docs
-
-# Make changes and push
-git add .
-git commit -m "Your changes"
-git push origin main
+npm install @nexus/sdk
 ```
 
-The site will be available at: **https://bhedanikhilkumar-code.github.io/docs/**
+### Go
+
+```bash
+go get github.com/nexus/sdk-go
+```
+
+## Example: Create a User
+
+<Tabs>
+  <Tab value="python" label="Python">
+    ```python
+    from nexus import Client
+    
+    client = Client(api_key="nx_live_xxxxxxxxxxxx")
+    
+    user = client.users.create(
+        email="new@example.com",
+        name="New User"
+    )
+    print(f"Created: {user.id}")
+    ```
+  </Tab>
+  <Tab value="node" label="Node.js">
+    ```javascript
+    import { NexusClient } from '@nexus/sdk';
+    
+    const client = new NexusClient({ apiKey: 'nx_live_xxxxxxxxxxxx' });
+    
+    const user = await client.users.create({
+      email: 'new@example.com',
+      name: 'New User'
+    });
+    console.log(`Created: ${user.id}`);
+    ```
+  </Tab>
+  <Tab value="curl" label="cURL">
+    ```bash
+    curl -X POST "https://api.nexus.dev/v1/users" \
+      -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+      -H "Content-Type: application/json" \
+      -d '{"email": "new@example.com", "name": "New User"}'
+    ```
+  </Tab>
+</Tabs>
+
+## API Endpoints
+
+| Resource | Endpoints |
+|----------|-----------|
+| Users | List, Get, Create, Update, Delete |
+| Projects | List, Get, Create, Update, Delete |
+| Analytics | Overview, Events, Metrics |
+| Webhooks | Subscribe, Unsubscribe |
+
+## Contributing
+
+Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) before submitting PRs.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🔗 Links
-
-- 🌐 **Live Documentation**: https://bhedanikhilkumar-code.github.io/docs/
-- 📦 **npm Package**: https://www.npmjs.com/package/@nexusapi/sdk
-- 💬 **Discussions**: https://github.com/bhedanikhilkumar-code/docs/discussions
-- 🐛 **Issue Tracker**: https://github.com/bhedanikhilkumar-code/docs/issues
-
----
-
-<div align="center">
-  <p>Built with ❤️ for developers | © 2024 Nexus API</p>
-</div>
+Built with ❤️ by the Nexus team

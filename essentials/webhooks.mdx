@@ -1,0 +1,62 @@
+---
+title: Webhooks
+description: Receive real-time notifications for events
+---
+
+## Setting Up Webhooks
+
+1. Create endpoint that accepts POST requests
+2. Register URL in **Settings** → **Webhooks**
+3. Verify webhook signatures
+
+## Example Endpoint
+
+```python
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/webhooks/nexus', methods=['POST'])
+def handle_webhook():
+    payload = request.json
+    event_type = payload.get('type')
+    
+    if event_type == 'user.created':
+        user = payload.get('data')
+        print(f"New user: {user['email']}")
+    
+    return jsonify({'status': 'received'}), 200
+```
+
+## Verifying Signatures
+
+```python
+import hmac
+import hashlib
+
+def verify_signature(payload_body, signature_header):
+    expected = hmac.new(
+        WEBHOOK_SECRET.encode(),
+        payload_body,
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(f"sha256={expected}", signature_header)
+```
+
+## Event Types
+
+| Event | Description |
+|-------|-------------|
+| `user.created` | New user created |
+| `user.updated` | User data changed |
+| `user.deleted` | User deleted |
+| `project.created` | New project created |
+
+## Retry Policy
+
+Failed deliveries are retried:
+- 5 seconds
+- 30 seconds
+- 5 minutes
+- 30 minutes
+- 2 hours

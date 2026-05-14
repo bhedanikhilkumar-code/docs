@@ -1,0 +1,70 @@
+---
+title: Create Project
+description: Create a new project
+---
+
+Create a new project in your account.
+
+## Endpoint
+
+```
+POST /v1/projects
+```
+
+## Body Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Project name |
+| `description` | string | No | Project description |
+| `visibility` | string | No | `public`, `private` (default: `private`) |
+| `team_id` | string | No | Associated team ID |
+| `settings` | object | No | Project settings |
+
+## Request
+
+```bash
+curl -X POST "https://api.nexus.dev/v1/projects" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Mobile App",
+    "description": "iOS and Android mobile application",
+    "visibility": "private"
+  }'
+```
+
+## Response
+
+```json
+{
+  "id": "prj_6g7h8i9j0k",
+  "object": "project",
+  "name": "Mobile App",
+  "description": "iOS and Android mobile application",
+  "status": "active",
+  "visibility": "private",
+  "team_id": null,
+  "settings": {
+    "default_permissions": "read",
+    "allowed_origins": []
+  },
+  "created_at": "2024-01-20T16:30:00Z",
+  "updated_at": "2024-01-20T16:30:00Z"
+}
+```
+
+## Python SDK
+
+```python
+project = client.projects.create(
+    name="New Project",
+    description="Project description here",
+    visibility="private",
+    settings={
+        "default_permissions": "read",
+        "allowed_origins": ["https://app.example.com"]
+    }
+)
+print(f"Created project: {project.id}")
+```

@@ -1,0 +1,92 @@
+---
+title: Contextual Menu
+description: One-click access to AI coding tools from your docs
+---
+
+The contextual menu gives readers quick access to popular AI coding tools, making it easy to apply what they learn.
+
+## How It Works
+
+When users select text in your documentation, they see options to:
+
+- Copy the code
+- Open in Cursor
+- Ask ChatGPT
+- Analyze with Claude
+- Search with Perplexity
+
+## Enabling Contextual Menu
+
+Add to `docs.json`:
+
+```json
+{
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  }
+}
+```
+
+## Available Options
+
+| Option | Description | Icon |
+|--------|-------------|------|
+| `copy` | Copy text to clipboard | 📋 |
+| `view` | Open in new tab | 🔗 |
+| `chatgpt` | Open in ChatGPT | 🤖 |
+| `claude` | Open in Claude | 💬 |
+| `perplexity` | Search in Perplexity | 🔍 |
+| `cursor` | Open in Cursor | ✨ |
+| `vscode` | Open in VS Code | 💻 |
+| `mcp` | Use MCP tools | 🔧 |
+
+## Example Usage
+
+When a user selects this code:
+
+```python
+user = client.users.create(
+    email="new@example.com",
+    name="New User"
+)
+```
+
+They can instantly:
+- Copy to clipboard
+- Open in Cursor for AI review
+- Ask ChatGPT to explain
+
+## Customizing Context
+
+You can add custom contextual options:
+
+```mdx
+<ContextButton
+  label="Test this code"
+  action="open-sandbox"
+  icon="play"
+/>
+```
+
+## Best Practices
+
+<Steps>
+  <Step title="Enable key tools">
+    Include the most popular AI coding tools your users prefer.
+  </Step>
+  <Step title="Test selections">
+    Ensure code and text selections work well with the menu.
+  </Step>
+  <Step title="Keep content clean">
+    Don't overload pages with options that distract from reading.
+  </Step>
+</Steps>

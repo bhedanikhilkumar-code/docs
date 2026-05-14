@@ -1,0 +1,50 @@
+---
+title: Update Project
+description: Update project properties
+---
+
+Update an existing project's properties.
+
+## Endpoint
+
+```
+PATCH /v1/projects/{id}
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | Project ID |
+
+## Body Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | string | Updated project name |
+| `description` | string | Updated description |
+| `status` | string | `active` or `archived` |
+| `visibility` | string | `public` or `private` |
+| `settings` | object | Updated settings |
+
+## Request
+
+```bash
+curl -X PATCH "https://api.nexus.dev/v1/projects/prj_6g7h8i9j0k" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated Project Name",
+    "status": "archived"
+  }'
+```
+
+## Python SDK
+
+```python
+project = client.projects.update(
+    "prj_6g7h8i9j0k",
+    name="Updated Name",
+    status="archived"
+)
+```

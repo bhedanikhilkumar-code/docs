@@ -1,0 +1,83 @@
+---
+title: Delete User
+description: Permanently delete a user from your account
+---
+
+Permanently delete a user and all associated data.
+
+<Warning>
+  This action is irreversible. All data associated with the user will be permanently deleted.
+</Warning>
+
+## Endpoint
+
+```
+DELETE /v1/users/{id}
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | The user's unique ID |
+
+## Request
+
+<Tabs>
+  <Tab value="curl" label="cURL">
+    ```bash
+    curl -X DELETE "https://api.nexus.dev/v1/users/usr_3c4d5e6f7g8" \
+      -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+    ```
+  </Tab>
+  <Tab value="python" label="Python">
+    ```python
+    client.users.delete("usr_3c4d5e6f7g8")
+    ```
+  </Tab>
+  <Tab value="node" label="Node.js">
+    ```javascript
+    await client.users.delete('usr_3c4d5e6f7g8');
+    ```
+  </Tab>
+</Tabs>
+
+## Response
+
+```json
+{
+  "id": "usr_3c4d5e6f7g8",
+  "object": "user",
+  "deleted": true
+}
+```
+
+## Error Responses
+
+| Status | Code | Description |
+|--------|------|-------------|
+| 404 | `not_found` | User ID does not exist |
+
+## Python SDK
+
+```python
+from nexus.exceptions import NexusNotFoundError
+
+try:
+    client.users.delete("usr_3c4d5e6f7g8")
+    print("User deleted successfully")
+except NexusNotFoundError:
+    print("User not found")
+```
+
+## Soft Delete Alternative
+
+Instead of permanent deletion, you can suspend the user:
+
+```python
+# Suspend instead of delete
+user = client.users.update(
+    "usr_3c4d5e6f7g8",
+    status="suspended"
+)
+```
