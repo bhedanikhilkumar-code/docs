@@ -1,0 +1,69 @@
+---
+title: Analytics Overview
+description: Get a summary of your analytics data
+---
+
+Retrieve aggregated analytics metrics for your account.
+
+## Endpoint
+
+```
+GET /v1/analytics/overview
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `period` | string | No | Time period: `24h`, `7d`, `30d`, `90d` (default: `7d`) |
+| `interval` | string | No | Data granularity: `hour`, `day`, `week` |
+
+## Request
+
+```bash
+curl "https://api.nexus.dev/v1/analytics/overview?period=30d" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+## Response
+
+```json
+{
+  "object": "analytics_overview",
+  "period": {
+    "start": "2024-01-01T00:00:00Z",
+    "end": "2024-01-31T23:59:59Z"
+  },
+  "metrics": {
+    "total_users": 1520,
+    "active_users": 485,
+    "new_users": 127,
+    "api_requests": 45820,
+    "avg_response_time_ms": 45
+  },
+  "breakdown": {
+    "by_status": {
+      "active": 485,
+      "inactive": 1035
+    },
+    "by_role": {
+      "admin": 12,
+      "member": 480,
+      "viewer": 1028
+    }
+  }
+}
+```
+
+## Python SDK
+
+```python
+overview = client.analytics.overview(
+    period="30d",
+    interval="day"
+)
+
+print(f"Total users: {overview.metrics.total_users}")
+print(f"Active users: {overview.metrics.active_users}")
+print(f"API requests: {overview.metrics.api_requests}")
+```

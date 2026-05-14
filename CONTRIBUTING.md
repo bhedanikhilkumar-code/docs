@@ -1,59 +1,111 @@
 # Contributing to Nexus API Documentation
 
-Thank you for your interest in improving our documentation! 🎉
+Thank you for your interest in contributing! This guide will help you get started.
 
 ## How to Contribute
 
-### 📝 Documentation Improvements
+### 1. Fork the Repository
 
-- Fix typos or grammar errors
-- Improve clarity or explanations
-- Add missing information
-- Update outdated code examples
+Click the **Fork** button on GitHub to create your own copy.
 
-### 🐛 Reporting Issues
+### 2. Clone Your Fork
 
-Found a mistake or want to suggest improvements?
+```bash
+git clone https://github.com/YOUR_USERNAME/docs.git
+cd docs
+```
 
-1. Check if an issue already exists
-2. Create a new issue with a clear description
-3. Include relevant links or screenshots if applicable
+### 3. Create a Branch
 
-### 🔧 Making Changes
+```bash
+git checkout -b feature/your-feature-name
+```
 
-1. **Fork** the repository
-2. **Clone** your fork:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/docs.git
-   cd docs
-   ```
-3. **Create a branch** for your changes:
-   ```bash
-   git checkout -b fix/amazing-improvement
-   ```
-4. **Make your changes** and commit:
-   ```bash
-   git commit -m "Add: brief description of changes"
-   ```
-5. **Push** to your fork:
-   ```bash
-   git push origin fix/amazing-improvement
-   ```
-6. Open a **Pull Request** against `main`
+### 4. Make Your Changes
 
-## 📋 Pull Request Guidelines
+Edit the documentation files in the appropriate folders:
+- `index.mdx`, `quickstart.mdx` - Home and getting started
+- `essentials/*.mdx` - Core concepts and guides
+- `api-reference/*.mdx` - API endpoint documentation
+- `snippets/*.mdx` - Code examples and SDK docs
 
-- Keep PRs focused and atomic
-- Write clear commit messages
-- Reference any related issues
-- Ensure code blocks are properly formatted
+### 5. Preview Changes
 
-## 💬 Questions?
+Install Mintlify CLI and preview locally:
 
-Feel free to:
-- Open a [Discussion](https://github.com/bhedanikhilkumar-code/docs/discussions)
-- Contact [support@nexusapi.dev](mailto:support@nexusapi.dev)
+```bash
+npm install -g mint
+mint dev
+```
 
+Visit `http://localhost:3000` to see your changes.
+
+### 6. Commit and Push
+
+```bash
+git add .
+git commit -m "feat: add documentation for new feature"
+git push origin feature/your-feature-name
+```
+
+### 7. Create a Pull Request
+
+Open a PR on GitHub with a clear description of your changes.
+
+## Documentation Guidelines
+
+### Content Standards
+
+- **Clear and concise** - Write for developers
+- **Code examples** - Include working examples for all endpoints
+- **Update navigation** - Add new pages to `docs.json`
+- **Test locally** - Verify changes with `mint dev`
+
+### Writing Style
+
+- Use active voice
+- Second person ("you")
+- Sentence case for headings
+- Code formatting for technical terms
+
+### File Structure
+
+```
+docs/
+├── index.mdx                 # Home page
+├── quickstart.mdx           # Quick start guide
+├── essentials/              # Core documentation
+│   ├── auth.mdx
+│   ├── api-keys.mdx
+│   └── ...
+├── api-reference/           # API endpoints
+│   ├── users/
+│   ├── projects/
+│   └── analytics/
+├── snippets/                # Code examples
+│   ├── python.mdx
+│   ├── javascript.mdx
+│   └── curl.mdx
+└── agent-ready/             # AI agent features
+```
+
+### Frontmatter
+
+Every MDX file needs frontmatter:
+
+```yaml
 ---
+title: Page Title
+description: Brief description of the page content
+---
+```
 
-**Thank you for contributing!** 🙏
+## Need Help?
+
+- [Discord Community](https://discord.gg/nexus)
+- [GitHub Issues](https://github.com/bhedanikhilkumar-code/docs/issues)
+- [Email Support](mailto:support@nexus.dev)
+
+## Code of Conduct
+
+Please be respectful and constructive in all interactions. We follow the [Contributor Covenant](https://www.contributor-covenant.org/).

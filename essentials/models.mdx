@@ -1,0 +1,58 @@
+---
+title: Data Models
+description: Understand the core data structures in Nexus API
+---
+
+## Base Object
+
+All objects share common fields:
+
+```json
+{
+  "id": "obj_1a2b3c4d",
+  "object": "user",
+  "created_at": "2024-01-15T10:30:00Z",
+  "updated_at": "2024-01-20T14:45:00Z"
+}
+```
+
+## User Object
+
+```json
+{
+  "id": "usr_1a2b3c4d5e",
+  "object": "user",
+  "email": "developer@example.com",
+  "name": "Jane Developer",
+  "status": "active",
+  "role": "member",
+  "metadata": {}
+}
+```
+
+## Project Object
+
+```json
+{
+  "id": "prj_1a2b3c4d5e",
+  "object": "project",
+  "name": "My Project",
+  "status": "active",
+  "visibility": "private"
+}
+```
+
+## List Response
+
+```json
+{
+  "object": "list",
+  "data": [],
+  "meta": {
+    "total": 150,
+    "count": 20,
+    "has_more": true,
+    "next_cursor": "cur_eyJpZCI6InVzcl8xIn0"
+  }
+}
+```

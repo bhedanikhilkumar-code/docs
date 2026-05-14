@@ -1,0 +1,168 @@
+---
+title: Python SDK
+description: Complete Python SDK reference for Nexus API
+---
+
+The official Python SDK for Nexus API with full type hints and async support.
+
+## Installation
+
+```bash
+pip install nexus-sdk
+```
+
+## Quick Start
+
+```python
+from nexus import Client
+
+# Initialize client
+client = Client(api_key="nx_live_xxxxxxxxxxxx")
+
+# List users
+users = client.users.list(limit=20)
+
+# Create a user
+user = client.users.create(
+    email="new@example.com",
+    name="New User"
+)
+
+# Update a user
+user = client.users.update(
+    "usr_123",
+    name="Updated Name"
+)
+
+# Delete a user
+client.users.delete("usr_123")
+```
+
+## Configuration
+
+```python
+from nexus import Client
+
+client = Client(
+    api_key="nx_live_xxxxxxxxxxxx",
+    timeout=30,
+    max_retries=3,
+    base_url="https://api.nexus.dev"
+)
+```
+
+## Async Support
+
+```python
+import asyncio
+from nexus import AsyncClient
+
+async def main():
+    async with AsyncClient(api_key="nx_live_xxxxxxxxxxxx") as client:
+        # Async operations
+        users = await client.users.list()
+        user = await client.users.create(
+            email="new@example.com",
+            name="New User"
+        )
+
+asyncio.run(main())
+```
+
+## Error Handling
+
+```python
+from nexus.exceptions import (
+    NexusError,
+    NexusAuthError,
+    NexusNotFoundError,
+    NexusRateLimitError,
+    NexusValidationError
+)
+
+try:
+    user = client.users.get("usr_123")
+except NexusAuthError:
+    print("Invalid API key")
+except NexusNotFoundError:
+    print("User not found")
+except NexusRateLimitError as e:
+    print(f"Rate limited, retry after {e.retry_after}s")
+except NexusValidationError as e:
+    print(f"Validation error: {e.details}")
+except NexusError as e:
+    print(f"Error: {e.message}")
+```
+
+## Pagination
+
+```python
+# Auto-pagination
+for user in client.users.list_all(batch_size=100):
+    process(user)
+
+# Manual pagination
+page = client.users.list(limit=50)
+while page.meta.has_more:
+    for user in page.data:
+        process(user)
+    page = client.users.list(cursor=page.meta.next_cursor)
+```
+
+## Projects
+
+```python
+# List projects
+projects = client.projects.list()
+
+# Create project
+project = client.projects.create(
+    name="New Project",
+    description="Description",
+    visibility="private"
+)
+
+# Update project
+project = client.projects.update(
+    "prj_123",
+    status="archived"
+)
+
+# Delete project
+client.projects.delete("prj_123")
+```
+
+## Analytics
+
+```python
+# Get overview
+overview = client.analytics.overview(period="30d")
+print(f"Total users: {overview.metrics.total_users}")
+
+# Track events
+client.analytics.track(
+    name="purchase_completed",
+    properties={
+        "amount": 99.99,
+        "currency": "USD"
+    }
+)
+
+# Get metrics
+metrics = client.analytics.metrics(
+    metric="requests",
+    period="7d",
+    interval="day"
+)
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="JavaScript SDK" icon="js" href="/snippets/javascript">
+    Node.js and browser SDK.
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/users/list">
+    All available endpoints.
+  </Card>
+</CardGroup>

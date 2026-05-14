@@ -1,0 +1,50 @@
+---
+title: Error Handling
+description: Understand and handle Nexus API errors
+---
+
+## Error Response Format
+
+```json
+{
+  "error": {
+    "code": "validation_error",
+    "message": "The email field is required",
+    "status": 400
+  }
+}
+```
+
+## HTTP Status Codes
+
+| Code | Meaning |
+|------|---------|
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 429 | Rate Limited |
+| 500 | Server Error |
+
+## Error Handling in Python
+
+```python
+from nexus.exceptions import (
+    NexusAuthError,
+    NexusNotFoundError,
+    NexusRateLimitError,
+    NexusValidationError
+)
+
+try:
+    user = client.users.create(email="test@example.com", name="Test")
+except NexusValidationError as e:
+    print(f"Validation failed: {e.details}")
+except NexusAuthError:
+    print("Invalid API key")
+except NexusNotFoundError:
+    print("Resource not found")
+except NexusRateLimitError as e:
+    time.sleep(e.retry_after or 60)
+```

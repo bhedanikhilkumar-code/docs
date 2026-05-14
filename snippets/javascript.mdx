@@ -1,0 +1,186 @@
+---
+title: JavaScript SDK
+description: Node.js and browser SDK for Nexus API
+---
+
+The official JavaScript/TypeScript SDK for Nexus API with full type support.
+
+## Installation
+
+```bash
+npm install @nexus/sdk
+```
+
+## Quick Start
+
+```javascript
+import { NexusClient } from '@nexus/sdk';
+
+const client = new NexusClient({
+  apiKey: 'nx_live_xxxxxxxxxxxx'
+});
+
+// List users
+const users = await client.users.list({ limit: 20 });
+
+// Create a user
+const user = await client.users.create({
+  email: 'new@example.com',
+  name: 'New User'
+});
+
+// Update a user
+const updated = await client.users.update('usr_123', {
+  name: 'Updated Name'
+});
+
+// Delete a user
+await client.users.delete('usr_123');
+```
+
+## Configuration
+
+```javascript
+import { NexusClient } from '@nexus/sdk';
+
+const client = new NexusClient({
+  apiKey: 'nx_live_xxxxxxxxxxxx',
+  timeout: 30000,
+  maxRetries: 3,
+  baseUrl: 'https://api.nexus.dev'
+});
+```
+
+## TypeScript Support
+
+```typescript
+import { NexusClient, type User, type Project } from '@nexus/sdk';
+
+const client = new NexusClient({ apiKey: process.env.NEXUS_API_KEY });
+
+// Fully typed responses
+const user: User = await client.users.get('usr_123');
+
+// Type-safe creation
+const newUser = await client.users.create({
+  email: 'new@example.com',
+  name: 'New User'
+});
+```
+
+## Error Handling
+
+```javascript
+import { 
+  NexusError, 
+  NexusAuthError, 
+  NexusNotFoundError,
+  NexusRateLimitError 
+} from '@nexus/sdk';
+
+try {
+  const user = await client.users.get('usr_123');
+} catch (error) {
+  if (error instanceof NexusAuthError) {
+    console.log('Invalid API key');
+  } else if (error instanceof NexusNotFoundError) {
+    console.log('User not found');
+  } else if (error.code === 'rate_limit_exceeded') {
+    await sleep(error.retryAfter * 1000);
+  } else {
+    throw error;
+  }
+}
+```
+
+## Pagination
+
+```javascript
+// Auto-pagination
+for await (const user of client.users.listAll({ batchSize: 100 })) {
+  console.log(user.email);
+}
+
+// Manual pagination
+let page = await client.users.list({ limit: 50 });
+while (page.meta.has_more) {
+  for (const user of page.data) {
+    console.log(user.email);
+  }
+  page = await client.users.list({ cursor: page.meta.next_cursor });
+}
+```
+
+## Projects
+
+```javascript
+// List projects
+const projects = await client.projects.list();
+
+// Create project
+const project = await client.projects.create({
+  name: 'New Project',
+  description: 'Description'
+});
+
+// Update project
+const updated = await client.projects.update('prj_123', {
+  status: 'archived'
+});
+
+// Delete project
+await client.projects.delete('prj_123');
+```
+
+## Analytics
+
+```javascript
+// Get overview
+const overview = await client.analytics.overview({ period: '30d' });
+console.log(`Total users: ${overview.metrics.total_users}`);
+
+// Track events
+await client.analytics.track({
+  name: 'purchase_completed',
+  properties: {
+    amount: 99.99,
+    currency: 'USD'
+  }
+});
+
+// Get metrics
+const metrics = await client.analytics.metrics({
+  metric: 'requests',
+  period: '7d'
+});
+```
+
+## Browser Usage
+
+```javascript
+// For client-side code, never expose the API key
+// Use a backend proxy or serverless function
+
+// Example: Next.js API route
+// pages/api/users.js
+export default async function handler(req, res) {
+  const response = await fetch('https://api.nexus.dev/v1/users', {
+    headers: {
+      'Authorization': `Bearer ${process.env.NEXUS_API_KEY}`
+    }
+  });
+  const data = await response.json();
+  res.json(data);
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Python SDK" icon="python" href="/snippets/python">
+    Python SDK reference.
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/users/list">
+    All available endpoints.
+  </Card>
+</CardGroup>

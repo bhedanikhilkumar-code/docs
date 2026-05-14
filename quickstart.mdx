@@ -1,0 +1,117 @@
+---
+title: Quick Start
+description: Get up and running with Nexus API in under 5 minutes.
+---
+
+This guide will walk you through the essential steps to start using Nexus API.
+
+## Prerequisites
+
+- A Nexus API account ([sign up free](https://app.nexus.dev/signup))
+- An API key (see [API Keys](/essentials/api-keys))
+- Basic familiarity with REST APIs
+
+## Step 1: Get Your API Key
+
+1. Log in to your [Nexus Dashboard](https://app.nexus.dev)
+2. Navigate to **Settings** → **API Keys**
+3. Click **Create New Key**
+4. Copy your key — you'll only see it once!
+
+<Warning>
+  Never expose your API key in client-side code or public repositories. Use environment variables.
+</Warning>
+
+## Step 2: Install the SDK
+
+<Tabs>
+  <Tab value="python" label="Python">
+    ```bash
+    pip install nexus-sdk
+    ```
+  </Tab>
+  <Tab value="node" label="Node.js">
+    ```bash
+    npm install @nexus/sdk
+    ```
+  </Tab>
+  <Tab value="go" label="Go">
+    ```bash
+    go get github.com/nexus/sdk-go
+    ```
+  </Tab>
+</Tabs>
+
+## Step 3: Make Your First Request
+
+Let's verify your API key by fetching your user profile:
+
+<Tabs>
+  <Tab value="python" label="Python">
+    ```python
+    from nexus import Client
+    
+    client = Client(api_key="nx_live_xxxxxxxxxxxx")
+    
+    # Get current user
+    me = client.users.me()
+    print(f"Logged in as: {me.email}")
+    ```
+  </Tab>
+  <Tab value="node" label="Node.js">
+    ```javascript
+    import { NexusClient } from '@nexus/sdk';
+    
+    const client = new NexusClient({ apiKey: 'nx_live_xxxxxxxxxxxx' });
+    
+    // Get current user
+    const me = await client.users.me();
+    console.log(`Logged in as: ${me.email}`);
+    ```
+  </Tab>
+  <Tab value="curl" label="cURL">
+    ```bash
+    curl https://api.nexus.dev/v1/users/me \
+      -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+    ```
+  </Tab>
+</Tabs>
+
+**Expected Response:**
+```json
+{
+  "id": "usr_1a2b3c4d5e",
+  "email": "developer@example.com",
+  "name": "Developer",
+  "created_at": "2024-01-15T10:30:00Z"
+}
+```
+
+## Step 4: Create Your First Resource
+
+Create a project to organize your work:
+
+```python
+project = client.projects.create(
+    name="My First Project",
+    description="Getting started with Nexus API"
+)
+print(f"Created project: {project.id}")
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="lock" href="/essentials/auth">
+    Learn about API key security and authentication best practices.
+  </Card>
+  <Card title="User Management" icon="users" href="/api-reference/users/list">
+    Explore the full Users API for managing your user base.
+  </Card>
+  <Card title="Rate Limits" icon="gauge" href="/essentials/rate-limits">
+    Understand our rate limiting to optimize your integration.
+  </Card>
+  <Card title="SDK Reference" icon="book" href="/snippets/python">
+    Browse complete SDK documentation.
+  </Card>
+</CardGroup>

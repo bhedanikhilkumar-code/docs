@@ -1,0 +1,49 @@
+---
+title: Authentication
+description: Secure your API requests with proper authentication
+---
+
+All Nexus API requests require authentication using API keys.
+
+## API Key Authentication
+
+Include your API key in the `Authorization` header:
+
+```bash
+curl https://api.nexus.dev/v1/users/me \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+## Key Types
+
+| Type | Prefix | Usage |
+|------|--------|-------|
+| Live | `nx_live_` | Production |
+| Sandbox | `nx_test_` | Testing |
+| Restricted | `nx_restricted_` | Limited permissions |
+
+## Security Best Practices
+
+<Steps>
+  <Step title="Never expose client-side">
+    API keys should only be used server-side.
+  </Step>
+  <Step title="Use environment variables">
+    Never hardcode keys in your code.
+  </Step>
+  <Step title="Rotate regularly">
+    Rotate keys periodically for security.
+  </Step>
+</Steps>
+
+## Error Response
+
+```json
+{
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key",
+    "status": 401
+  }
+}
+```

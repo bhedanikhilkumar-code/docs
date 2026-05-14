@@ -1,0 +1,160 @@
+---
+title: cURL Examples
+description: Direct API calls using cURL
+---
+
+Quick reference for making direct API calls with cURL.
+
+## Base Command
+
+```bash
+curl https://api.nexus.dev/v1 \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json"
+```
+
+## Users
+
+### List Users
+
+```bash
+curl "https://api.nexus.dev/v1/users?limit=20" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+### Get User
+
+```bash
+curl "https://api.nexus.dev/v1/users/usr_123" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+### Create User
+
+```bash
+curl -X POST "https://api.nexus.dev/v1/users" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "new@example.com",
+    "name": "New User",
+    "role": "member"
+  }'
+```
+
+### Update User
+
+```bash
+curl -X PATCH "https://api.nexus.dev/v1/users/usr_123" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated Name"
+  }'
+```
+
+### Delete User
+
+```bash
+curl -X DELETE "https://api.nexus.dev/v1/users/usr_123" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+## Projects
+
+### List Projects
+
+```bash
+curl "https://api.nexus.dev/v1/projects" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+### Create Project
+
+```bash
+curl -X POST "https://api.nexus.dev/v1/projects" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "New Project",
+    "description": "Project description",
+    "visibility": "private"
+  }'
+```
+
+## Analytics
+
+### Get Overview
+
+```bash
+curl "https://api.nexus.dev/v1/analytics/overview?period=30d" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+### Track Event
+
+```bash
+curl -X POST "https://api.nexus.dev/v1/analytics/events" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "purchase_completed",
+    "user_id": "usr_123",
+    "properties": {
+      "amount": 99.99,
+      "currency": "USD"
+    }
+  }'
+```
+
+## Useful Flags
+
+| Flag | Description |
+|------|-------------|
+| `-X` | HTTP method (POST, PATCH, DELETE) |
+| `-H` | Add header |
+| `-d` | Request body |
+| `-v` | Verbose output |
+| `-s` | Silent (no progress meter) |
+| `-o` | Output to file |
+
+## Environment Variables
+
+```bash
+# Set API key
+export NEXUS_API_KEY="nx_live_xxxxxxxxxxxx"
+
+# Use in requests
+curl "https://api.nexus.dev/v1/users" \
+  -H "Authorization: Bearer $NEXUS_API_KEY"
+```
+
+## jq for JSON Processing
+
+```bash
+# Pretty print response
+curl "https://api.nexus.dev/v1/users" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  | jq .
+
+# Extract specific field
+curl "https://api.nexus.dev/v1/users" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  | jq '.data[].email'
+
+# Filter results
+curl "https://api.nexus.dev/v1/users" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+  | jq '.data[] | select(.status == "active")'
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Python SDK" icon="python" href="/snippets/python">
+    Python SDK for easier integration.
+  </Card>
+  <Card title="JavaScript SDK" icon="js" href="/snippets/javascript">
+    Node.js/TypeScript SDK.
+  </Card>
+</CardGroup>

@@ -1,0 +1,44 @@
+---
+title: Pagination
+description: Navigate large result sets with cursor-based pagination
+---
+
+## Using Cursors
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | integer | Items per page (default: 20, max: 500) |
+| `cursor` | string | Pagination cursor |
+
+## Response Format
+
+```json
+{
+  "object": "list",
+  "data": [],
+  "meta": {
+    "count": 20,
+    "has_more": true,
+    "next_cursor": "cur_eyJpZCI6InVzcl8xIn0"
+  }
+}
+```
+
+## Python SDK
+
+```python
+# Auto-pagination
+for user in client.users.list_all():
+    print(user.email)
+
+# Manual pagination
+page = client.users.list(limit=50)
+while page.meta.has_more:
+    for user in page.data:
+        print(user.email)
+    page = client.users.list(cursor=page.meta.next_cursor)
+```
+
+<Warning>
+  Cursors expire after 24 hours. Re-fetch from beginning if expired.
+</Warning>

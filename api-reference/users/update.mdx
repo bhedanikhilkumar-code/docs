@@ -1,0 +1,103 @@
+---
+title: Update User
+description: Update an existing user's information
+---
+
+Update a user's properties. Only provided fields will be updated.
+
+## Endpoint
+
+```
+PATCH /v1/users/{id}
+```
+
+## Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | The user's unique ID |
+
+## Body Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | No | Updated display name |
+| `email` | string | No | Updated email address |
+| `role` | string | No | Updated role |
+| `status` | string | No | Updated status: `active`, `inactive`, `suspended` |
+| `metadata` | object | No | Updated metadata (merges with existing) |
+
+## Request
+
+<Tabs>
+  <Tab value="curl" label="cURL">
+    ```bash
+    curl -X PATCH "https://api.nexus.dev/v1/users/usr_3c4d5e6f7g8" \
+      -H "Authorization: Bearer nx_live_xxxxxxxxxxxx" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "Updated Name",
+        "role": "admin"
+      }'
+    ```
+  </Tab>
+  <Tab value="python" label="Python">
+    ```python
+    user = client.users.update(
+        "usr_3c4d5e6f7g8",
+        name="Updated Name",
+        role="admin"
+    )
+    ```
+  </Tab>
+  <Tab value="node" label="Node.js">
+    ```javascript
+    const user = await client.users.update('usr_3c4d5e6f7g8', {
+      name: 'Updated Name',
+      role: 'admin'
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Response
+
+```json
+{
+  "id": "usr_3c4d5e6f7g8",
+  "object": "user",
+  "email": "newuser@example.com",
+  "name": "Updated Name",
+  "avatar_url": null,
+  "status": "active",
+  "role": "admin",
+  "metadata": {},
+  "created_at": "2024-01-20T15:30:00Z",
+  "updated_at": "2024-01-20T16:00:00Z"
+}
+```
+
+## Error Responses
+
+| Status | Code | Description |
+|--------|------|-------------|
+| 404 | `not_found` | User ID does not exist |
+| 400 | `validation_error` | Invalid field values |
+
+## Python SDK
+
+```python
+# Update multiple fields at once
+user = client.users.update(
+    "usr_3c4d5e6f7g8",
+    name="New Name",
+    role="admin",
+    metadata={"updated": "true"}
+)
+
+# Update metadata only (merges with existing)
+user = client.users.update(
+    "usr_3c4d5e6f7g8",
+    metadata={"plan": "enterprise"}
+)
+```

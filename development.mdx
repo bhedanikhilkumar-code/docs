@@ -1,0 +1,192 @@
+---
+title: Development Environment
+description: Set up your local development environment for Nexus API
+---
+
+This guide covers local development setup, testing strategies, and best practices.
+
+## Environment Setup
+
+### 1. Environment Variables
+
+Create a `.env` file in your project root:
+
+```bash
+# Nexus API Configuration
+NEXUS_API_KEY=nx_live_xxxxxxxxxxxx
+NEXUS_BASE_URL=https://api.nexus.dev
+NEXUS_WEBHOOK_SECRET=whsec_xxxxxxxxxxxx
+
+# Optional: Use sandbox for testing
+NEXUS_ENV=sandbox
+```
+
+<Note>
+  In production, use a secrets manager like AWS Secrets Manager or HashiCorp Vault.
+</Note>
+
+### 2. SDK Configuration
+
+<Tabs>
+  <Tab value="python" label="Python">
+    ```python
+    import os
+    from nexus import Client
+    
+    # Initialize with environment variables
+    client = Client(
+        api_key=os.getenv("NEXUS_API_KEY"),
+        timeout=30,
+        max_retries=3
+    )
+    ```
+  </Tab>
+  <Tab value="node" label="Node.js">
+    ```javascript
+    import 'dotenv/config';
+    import { NexusClient } from '@nexus/sdk';
+    
+    const client = new NexusClient({
+      apiKey: process.env.NEXUS_API_KEY,
+      timeout: 30000,
+      maxRetries: 3
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Local Testing
+
+### Sandbox Environment
+
+Use our sandbox for testing without affecting production data:
+
+```bash
+# Sandbox API URL
+NEXUS_BASE_URL=https://api-sandbox.nexus.dev
+```
+
+Sandbox features:
+- All endpoints available
+- Data is isolated and resettable
+- Rate limits are relaxed
+- No real charges
+
+### Testing Webhooks Locally
+
+Use [ngrok](https://ngrok.com) to test webhooks locally:
+
+```bash
+# Start ngrok tunnel to port 3000
+ngrok http 3000
+
+# Update webhook URL in dashboard to:
+# https://abc123.ngrok.io/webhooks/nexus
+```
+
+## Development Workflow
+
+### 1. Branch Strategy
+
+```
+main          → Production
+staging       → Pre-production testing
+dev/*         → Feature development
+```
+
+### 2. Making Changes
+
+```bash
+# Create a new feature branch
+git checkout -b feature/my-new-feature
+
+# Make your changes
+# ...
+
+# Run tests
+npm test
+
+# Commit and push
+git commit -m "feat: add new endpoint"
+git push origin feature/my-new-feature
+```
+
+### 3. Code Review
+
+Before merging:
+- [ ] Tests pass locally
+- [ ] API changes documented
+- [ ] No sensitive data in commits
+- [ ] Rate limits respected
+
+## Error Handling
+
+Implement robust error handling:
+
+```python
+from nexus.exceptions import (
+    NexusAuthError,
+    NexusRateLimitError,
+    NexusServerError,
+    NexusNotFoundError
+)
+
+try:
+    user = client.users.get("usr_123")
+except NexusAuthError:
+    print("Invalid API key")
+except NexusRateLimitError:
+    print("Rate limited - implement backoff")
+except NexusNotFoundError:
+    print("User not found")
+except NexusServerError:
+    print("Server error - contact support")
+```
+
+## Performance Optimization
+
+### Caching
+
+Implement caching for frequently accessed data:
+
+```python
+import cachelib
+
+cache = cachelib.Cache(ttl=300)  # 5 minute TTL
+
+def get_user_cached(user_id):
+    cache_key = f"user:{user_id}"
+    if cached := cache.get(cache_key):
+        return cached
+    
+    user = client.users.get(user_id)
+    cache.set(cache_key, user)
+    return user
+```
+
+### Pagination
+
+Always paginate large result sets:
+
+```python
+# List all users with automatic pagination
+for user in client.users.list_all():
+    process_user(user)
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="book" href="/api-reference/users/list">
+    Explore all available endpoints.
+  </Card>
+  <Card title="Error Handling" icon="alert" href="/essentials/errors">
+    Learn about error codes and handling.
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/essentials/webhooks">
+    Set up real-time event notifications.
+  </Card>
+  <Card title="SDK Examples" icon="code" href="/snippets/python">
+    View more code examples.
+  </Card>
+</CardGroup>

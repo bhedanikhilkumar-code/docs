@@ -1,0 +1,39 @@
+---
+title: Delete Project
+description: Delete a project
+---
+
+Permanently delete a project and all associated resources.
+
+## Endpoint
+
+```
+DELETE /v1/projects/{id}
+```
+
+## Request
+
+```bash
+curl -X DELETE "https://api.nexus.dev/v1/projects/prj_6g7h8i9j0k" \
+  -H "Authorization: Bearer nx_live_xxxxxxxxxxxx"
+```
+
+## Response
+
+```json
+{
+  "id": "prj_6g7h8i9j0k",
+  "object": "project",
+  "deleted": true
+}
+```
+
+## Python SDK
+
+```python
+# Archive instead of delete
+project = client.projects.update("prj_6g7h8i9j0k", status="archived")
+
+# Or permanently delete
+client.projects.delete("prj_6g7h8i9j0k")
+```

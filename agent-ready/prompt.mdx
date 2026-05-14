@@ -1,0 +1,83 @@
+---
+title: AI Prompt Component
+description: Embed shareable AI prompts in your documentation
+---
+
+The `<Prompt>` component lets you create reusable prompts that users can copy or open directly in AI coding tools like Cursor.
+
+## Basic Usage
+
+```mdx
+<Prompt
+  label="Analyze this code"
+  prompt="Review the following code for performance issues and suggest improvements: {code}"
+  icon="sparkles"
+/>
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `label` | string | Button label text |
+| `prompt` | string | The prompt content |
+| `icon` | string | Icon name from Lucide |
+| `tool` | string | Specific tool: `cursor`, `claude`, `chatgpt` |
+
+## Examples
+
+### Code Review Prompt
+
+```mdx
+<Prompt
+  label="Review this code"
+  prompt="Review this code for:
+1. Performance bottlenecks
+2. Security vulnerabilities
+3. Best practices violations
+4. Suggested improvements
+
+Provide a detailed report with examples."
+/>
+```
+
+### Documentation Generation
+
+```mdx
+<Prompt
+  label="Generate documentation"
+  prompt="Generate comprehensive documentation for this API endpoint including:
+- Usage examples
+- Parameter descriptions
+- Response formats
+- Error codes
+- Related endpoints"
+  tool="cursor"
+/>
+```
+
+## Supported AI Tools
+
+| Tool | Icon | Opens In |
+|------|------|----------|
+| Cursor | cursor | Cursor AI |
+| Claude | claude | Anthropic Claude |
+| ChatGPT | chatgpt | OpenAI ChatGPT |
+| VS Code | vscode | VS Code Copilot |
+
+## Best Practices
+
+<Steps>
+  <Step title="Be specific">
+    Write clear, actionable prompts with examples where possible.
+  </Step>
+  <Step title="Include context">
+    Add relevant background information users need.
+  </Step>
+  <Step title="Use variables">
+    Let users customize with {variable} placeholders.
+  </Step>
+  <Step title="Test prompts">
+    Try your prompts in the actual AI tool before publishing.
+  </Step>
+</Steps>
